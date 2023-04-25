@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Inventory</string>
+    <string name="menu_open">open</string>
+    <string name="menu_close">close</string>
+    <string name="select">Select Section</string>
+    <string name="Description">Description</string>
+</resources>
