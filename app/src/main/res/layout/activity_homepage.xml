@@ -28,21 +28,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Complaint"
+                    android:fontFamily="@font/abhaya_libre_medium"
+                    android:textColor="@color/black"
                     android:textSize="30sp"
-                    android:fontFamily="@font/aladin"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
+
                 <Button
+                    android:id="@+id/register"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:text="Register"
                     android:background="#00000000"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:text="Register"
+                    android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
-                    android:textAlignment="textStart"
-                    android:id="@+id/register"/>
+                    android:textStyle="bold"/>
 
                 <Button
                     android:layout_width="300dp"
@@ -52,8 +54,9 @@
                     android:background="#00000000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
                     android:textAlignment="textStart"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:id="@+id/complaintstatus"/>
 
 
@@ -71,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="Stock"
                     android:textSize="30sp"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/abhaya_libre_medium"
                     android:textStyle="bold"
                     android:textColor="@color/white"/>
 
@@ -83,8 +86,10 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
-                    android:textAlignment="textStart"/>
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:id="@+id/stock_verification"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -94,7 +99,8 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
 
@@ -112,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:text="Work"
                     android:textSize="30sp"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/abhaya_libre_medium"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
 
@@ -121,10 +127,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:text="Bid for Maintanance"
+                    android:id="@+id/Bid"
                     android:background="#00000000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
                 <Button
@@ -135,7 +143,8 @@
                     android:background="#00000000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
 
@@ -153,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:text="Meeting"
                     android:textSize="30sp"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/abhaya_libre_medium"
                     android:textStyle="bold"
                     android:textColor="@color/white"/>
 
@@ -165,7 +174,8 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
                 <Button
@@ -176,7 +186,8 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
 
@@ -194,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:text="Meeting"
                     android:textSize="30sp"
-                    android:fontFamily="@font/aladin"
+                    android:fontFamily="@font/abhaya_libre_medium"
                     android:textStyle="bold"
                     android:textColor="@color/white"/>
 
@@ -206,7 +217,8 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
                 <Button
@@ -217,7 +229,8 @@
                     android:background="#00000000"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:fontFamily="@font/aclonica"
+                    android:fontFamily="@font/alegreya_sc_italic"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"/>
 
 

@@ -22,7 +22,8 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@color/lighyellow"/>
     <EditText
         android:id="@+id/full_name_text_field"
         android:layout_width="match_parent"
@@ -83,18 +84,21 @@
     </com.google.android.material.textfield.TextInputLayout>
     <ImageView
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
       android:id="@+id/image"/>
 
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
       android:text="Add Image"
+        android:backgroundTint="@color/black"
+
       android:id="@+id/Pick"/>
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
       android:text="Submit"
+        android:backgroundTint="@color/black"
       android:id="@+id/submit"/>
 
 

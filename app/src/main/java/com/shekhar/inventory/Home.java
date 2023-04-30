@@ -32,9 +32,11 @@ import android.widget.Toolbar;
 
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -42,13 +44,13 @@ public class Home extends AppCompatActivity {
     private EditText Name;
     Button submit;
     Bitmap bitmap;
-    Uri uri;
+    Uri imageUri;
 
     TextInputEditText textInputEditText;
 
     ImageView imageView;
     Button button;
-    String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
     int REQUEST_CODE = 12345;
     boolean isPermissionGranted = false;
 
@@ -84,13 +86,44 @@ public class Home extends AppCompatActivity {
                 String s = autoCompleteTextView.getText().toString();
                 String d = textInputEditText.getText().toString();
 
+                if(n.trim().isEmpty()){
+                    Toast.makeText(Home.this, "Please enter your name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                Intent intent = new Intent(Home.this,Complaint.class);
+                if(s.trim().isEmpty()){
+                    Toast.makeText(Home.this, "Please select your section", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(d.trim().isEmpty()){
+                    Toast.makeText(Home.this, "Please write some description", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(d.trim().isEmpty()){
+                    Toast.makeText(Home.this, "Please write some description", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(bitmap==null){
+                    Toast.makeText(Home.this, "Please add image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
+                //Image : Pass image uri
+                Intent intent = new Intent(Home.this,Complaint_status.class);
+
                 intent.putExtra("Name",n);
                 intent.putExtra("Section",s);
                 intent.putExtra("description",d);
+                intent.putExtra("image", imageUri.toString());
+
 
                 startActivity(intent);
+
             }
         });
         imageView = findViewById(R.id.image);
@@ -211,9 +244,10 @@ public class Home extends AppCompatActivity {
         if (data !=null)
         {
             Uri filePath = data.getData();
+            imageUri = data.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(filePath);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                bitmap = BitmapFactory.decodeStream(inputStream);
                 imageView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);

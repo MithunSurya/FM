@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Homepage extends AppCompatActivity {
 
-    private Button register,complaintstatus;
+    private Button register,complaintstatus,stockverification,Bid;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -49,6 +49,8 @@ public class Homepage extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         register = findViewById(R.id.register);
         complaintstatus = findViewById(R.id.complaintstatus);
+        stockverification = findViewById(R.id.stock_verification);
+        Bid = findViewById(R.id.Bid);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +62,28 @@ public class Homepage extends AppCompatActivity {
         complaintstatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Homepage.this,Complaint.class);
+                Intent intent = new Intent(Homepage.this,Complaint_status.class);
                 startActivity(intent);
             }
         });
+        stockverification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Homepage.this,Stockverification.class);
+                startActivity(intent);
+            }
+        });
+        Bid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Homepage.this,Bid.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
