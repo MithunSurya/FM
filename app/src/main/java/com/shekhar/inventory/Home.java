@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,15 +31,26 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
     private EditText Name;
@@ -62,6 +74,12 @@ public class Home extends AppCompatActivity {
     Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    private FirebaseFirestore database;
+
+    private StorageReference storageRef;
+
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)){
@@ -78,6 +96,12 @@ public class Home extends AppCompatActivity {
         submit = findViewById(R.id.submit);
         Name = findViewById(R.id.full_name_text_field);
         textInputEditText = findViewById(R.id.description_box);
+
+        database = FirebaseFirestore.getInstance();
+
+        // Create a Cloud Storage reference from the app
+          storageRef = FirebaseStorage.getInstance().getReference();
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +125,6 @@ public class Home extends AppCompatActivity {
                     return;
                 }
 
-                if(d.trim().isEmpty()){
-                    Toast.makeText(Home.this, "Please write some description", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 if(bitmap==null){
                     Toast.makeText(Home.this, "Please add image", Toast.LENGTH_SHORT).show();
@@ -113,16 +133,95 @@ public class Home extends AppCompatActivity {
 
 
 
-                //Image : Pass image uri
-                Intent intent = new Intent(Home.this,Complaint_status.class);
 
-                intent.putExtra("Name",n);
-                intent.putExtra("Section",s);
-                intent.putExtra("description",d);
-                intent.putExtra("image", imageUri.toString());
+                //Upload image to firebase
+                final ProgressDialog progressDialog = new ProgressDialog(Home.this);
+                progressDialog.setTitle("Uploading...");
+                progressDialog.show();
 
 
-                startActivity(intent);
+
+
+                // Create a reference
+                StorageReference imageRef = storageRef.child("images/"+Timestamp.now()+".jpg");
+
+                UploadTask uploadTask = imageRef.putFile(imageUri);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        progressDialog.dismiss();
+                        Toast.makeText(Home.this, "Unable to upload image", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                        progressDialog.dismiss();
+
+
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+
+
+                                //Store data in Fire store : database
+                                Map<String, Object> complaintMap = new HashMap<>();
+                                complaintMap.put("name", n);
+                                complaintMap.put("section", s);
+                                complaintMap.put("description", d);
+                                complaintMap.put("image", uri.toString());
+                                complaintMap.put("timestamp", Timestamp.now());
+
+
+                                // Add a new document with a generated ID
+                                database.collection("complaints")
+                                        .add(complaintMap)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+
+                                                Log.d("Firestore", "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                                                //Image : Pass image uri
+                                                Intent intent = new Intent(Home.this,Complaint_status.class);
+
+                                                intent.putExtra("Name",n);
+                                                intent.putExtra("Section",s);
+                                                intent.putExtra("description",d);
+                                                intent.putExtra("image", imageUri.toString());
+
+
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("Firestore", "Error adding document", e);
+                                            }
+                                        });
+
+
+
+
+                            }
+                        });
+
+                    }
+                }) .addOnProgressListener((OnProgressListener<? super UploadTask.TaskSnapshot>) taskSnapshot -> {
+                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            .getTotalByteCount());
+                    progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                });
+
+
+
+
+
+
 
             }
         });

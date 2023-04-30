@@ -62,7 +62,7 @@ public class Homepage extends AppCompatActivity {
         complaintstatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Homepage.this,Complaint_status.class);
+                Intent intent = new Intent(Homepage.this,Complaints.class);
                 startActivity(intent);
             }
         });

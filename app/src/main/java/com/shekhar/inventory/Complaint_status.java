@@ -69,13 +69,16 @@ public class Complaint_status extends AppCompatActivity {
         Description.setText(description);
 
         //set image uri to image place holder (receiveImage) by converting it to bitmap
-        try {
-            InputStream inputStream = getContentResolver().openInputStream(Uri.parse(imageUriPath));
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            receiveimage.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        if(imageUriPath!=null){
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(Uri.parse(imageUriPath));
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                receiveimage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
+
 
 
 
@@ -86,7 +89,7 @@ public class Complaint_status extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
